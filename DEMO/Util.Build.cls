@@ -47,6 +47,14 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 
 <!-- You may also invoke some post-compile actions like testing or data load here -->
 
+<!-- Run tests -->
+<Invoke Class="UnitTest.Summit" Method="RunRecursive" CheckStatus="true" />
+<!-- Output test results -->
+<Invoke Class="UnitTest.Manager" Method="OutputResultsXml" CheckStatus="true">
+<Arg name="pFileName" Value="${SRCDIR}/testResult.xml" />
+</Invoke>
+
+
 </Namespace>
 
 <!-- Now, dismount database so we can copy database file -->
@@ -57,13 +65,6 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 </Invoke>
 </Namespace> -->
 
-
-<!-- Run tests -->
-<Invoke Class="UnitTest.Summit" Method="RunRecursive" CheckStatus="true" />
-<!-- Output test results -->
-<Invoke Class="UnitTest.Manager" Method="OutputResultsXml" CheckStatus="true">
-<Arg name="pFileName" Value="${SRCDIR}/testResult.xml" />
-</Invoke>
 
 
 
