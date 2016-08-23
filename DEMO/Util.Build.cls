@@ -31,11 +31,11 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 </Configuration>
 
 <!-- Import build class to new environment -->
-<Import File="${SRCDIR}/DEMO/Util.Build.cls" Flags="c" />
+<Import File="${SRCDIR}DEMO/Util.Build.cls" Flags="c" />
 
 <!-- Invoke compile method -->
 <Invoke Class="%SYSTEM.OBJ" Method="ImportDir" CheckStatus="true">
-<Arg name="dir" Value="${SRCDIR}/DEMO" />
+<Arg name="dir" Value="${SRCDIR}DEMO" />
 <Arg name="wildcards" Value="*.cls" />
 <Arg name="qspec" Value="c" />
 <Arg name="errorlog" Value="" />
