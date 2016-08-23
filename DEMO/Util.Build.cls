@@ -18,11 +18,14 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <!-- Namespace is named JOBNAME-BUILD to avoid wiping non-build namespace -->
 <Var Name="NAMESPACE" Value="${JOBNAME}-BUILD" />
 
+<!-- Define QA filepath for db -->
+<Var Name="DBDIR" Value="C:/InterSystems/HS20164QA/" />
+
 <!-- Delete old namespace and create new one -->
 <Namespace Name="${NAMESPACE}" Create="overwrite" 
   Code="${NAMESPACE}" Data="${NAMESPACE}">
 <Configuration>
-<Database Name="${NAMESPACE}" Dir="${SRCDIR}db/${NAMESPACE}/" Create="overwrite" InitialSize="1" ExpansionSize="1" />
+<Database Name="${NAMESPACE}" Dir="${DBDIR}db/${NAMESPACE}/" Create="overwrite" InitialSize="1" ExpansionSize="1" />
  <CSPApplication name="${NAMESPACE}" Directory="${NAMESPACE}" Url="/csp/${NAMESPACE}"
   Description="Build application" 
   Recurse="true" 
@@ -48,11 +51,11 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 
 <!-- Now, dismount database so we can copy database file -->
 <!-- This call is invoked in %SYS namespace -->
-<Namespace Name="%SYS">
+<!--<Namespace Name="%SYS">
 <Invoke Class="SYS.Database" Method="DismountDatabase" CheckStatus="true">
 <Arg name="DatabaseDir" Value="${SRCDIR}db/${NAMESPACE}/" />
 </Invoke>
-</Namespace>
+</Namespace> -->
 
 </Manifest>
 }
