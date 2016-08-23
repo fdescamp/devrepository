@@ -22,7 +22,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Namespace Name="${NAMESPACE}" Create="overwrite" 
   Code="${NAMESPACE}" Data="${NAMESPACE}">
 <Configuration>
-<Database Name="${NAMESPACE}" Dir="${SRCDIR}db/" Create="overwrite" InitialSize="1" ExpansionSize="1" />
+<Database Name="${NAMESPACE}" Dir="${SRCDIR}db/${NAMESPACE}/" Create="overwrite" InitialSize="1" ExpansionSize="1" />
  <CSPApplication name="${NAMESPACE}" Directory="${NAMESPACE}" Url="/csp/${NAMESPACE}"
   Description="Build application" 
   Recurse="true" 
@@ -50,7 +50,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <!-- This call is invoked in %SYS namespace -->
 <Namespace Name="%SYS">
 <Invoke Class="SYS.Database" Method="DismountDatabase" CheckStatus="true">
-<Arg name="DatabaseDir" Value="${SRCDIR}db/" />
+<Arg name="DatabaseDir" Value="${SRCDIR}db/${NAMESPACE}/" />
 </Invoke>
 </Namespace>
 
