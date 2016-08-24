@@ -26,6 +26,8 @@ ClassMethod GetConflictsById(pId As %String) As %List
 	if pId="" quit ""
 	set conflictList=""
 	set conflictList=conflictList_..GetTimeConflicts(pId)
+	set conflictList=conflictList_..GetAttendeeConflicts(pId)
+	
 	quit conflictList
 }
 
@@ -76,6 +78,19 @@ ClassMethod GetConflictCount(pId As %String) As %Integer
 	set conflicts=..GetConflictsById(pId)
 	if conflicts="" quit ""
 	quit $listlength(conflicts)
+}
+
+
+/// Get attendee conflicts. Happens when a session has number of attendees
+/// greater than room capacity
+ClassMethod GetAttendeeConflicts(pId As %String) As %List
+{
+	&sql(select SessionAttendees,SessionRoom->RoomCapacity
+		into :attendees,:capacity
+		from Data.Session
+		where ID=:pId)
+	if attendees>capacity quit $listbuild("Attendee count ("_attendees_") is greater than room capacity ("_capacity_")")
+	quit ""
 }
 
 Storage Default
