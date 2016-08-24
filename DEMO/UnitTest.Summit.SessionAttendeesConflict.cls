@@ -4,7 +4,7 @@ Class UnitTest.Summit.SessionAttendeesConflict Extends UnitTest.Transaction
 
 Parameter TITLE = "Session Attendees Conflicts";
 
-// test 2
+// test FD
 
 /// Test that conflict is reported when attendees don't fit into room
 Method TestAttendeesNotFit() As %Status
