@@ -4,7 +4,6 @@ Class HL7.ProductionTest Extends %UnitTest.TestProduction
 /// Class name of the production.  It must contain the production class name.
 Parameter PRODUCTION = "Tutorial.HL7ExampleProduction";
 
-
 Method OnBeforeProductionStart() As %Library.Status
 {
 	//MainDir where HL7 test messages are
@@ -39,16 +38,30 @@ Method OnBeforeProductionStart() As %Library.Status
 Method OnAfterProductionStart() As %Status
 {
 
- 
-		Set request = ##class(Ens.StringContainer).%New("1")
+ 		//Test SQL Business Operation
+ 		//Check that test patient does not exist in DB
+ 		set patient=##class(Demo.Patient).%New()
+ 		set patient.FirstName="John"
+ 		set patient.LastName="Doe"
+ 		set patient.PatientID="123456"
+ 		set patient.DOB="05-04-1980"
+ 		
+ 		Set request = ##class(Ens.StringContainer).%New(patient.PatientID)
 		Set tSC = ..SendRequest( "FindPatientinDB" ,request,.response,1,40)
-		Do $$$AssertEquals(response,"1","PatientID 1 should exist in DB.")		
+		Do $$$AssertEquals(response.StringValue,"","PatientID "_patient.PatientID_" should not exist in DB.")	
+				
+		//Insert Patient in DB
+		Set tSC = ..SendRequest( "FindPatientinDB" ,patient,.response,1,40)
+		Quit:$$$ISERR(tSC)
+		Do $$$AssertNotEquals(response.StringValue,"","PatientID "_patient.PatientID_" should be inserted in DB.")		
 		
 		
-		Set request = ##class(Ens.StringContainer).%New("123456")
+		//Check that test patient does exist in DB
+		Set request = ##class(Ens.StringContainer).%New(patient.PatientID)
 		Set tSC = ..SendRequest( "FindPatientinDB" ,request,.response,1,40)
-		Do $$$AssertEquals(response,"0","PatientID 123456 should not exist in DB.")		
-			
+		Quit:$$$ISERR(tSC)
+		Do $$$AssertNotEquals(response.StringValue,"","PatientID "_patient.PatientID_" should exist in DB.")		
+		
 		
 		/*Set request = ##class(Ens.StringRequest).%New()
 		set request.StringValue="Hello Ensemble"
@@ -61,15 +74,46 @@ Method OnAfterProductionStart() As %Status
 }
 
 
-Method CheckResults(ByRef Log As %String, New As %String) As %Library.Status
+
+Method CheckResults(ByRef Log As %String, New As %String) As %Status
 {
-	set tSC=$$$OK
-	
+	Set tSC = $$$OK
 	//ORMO01 should be sent to FileOperation 
 	set tSC=..CheckORMO01Result()	
-
+	
+	/*Set r = $$$AssertEquals($Get(New),2,"Should be 2 (found: "_+$Get(New)_")")
+	
+	Set text = $Get(Log(1,"Text"))
+	Do $$$AssertEquals(text,"OK","Should be 'OK' (found: '"_text_"')")
+	
+	Set text = $Get(Log(2,"Text"))
+	Do $$$AssertEquals(text,"ERROR","Should be 'ERROR' (found: '"_text_"')")
+		
+	if 'r set tSC=..Error("Expected event log entries don't match")*/
 	Quit tSC
 }
+
+
+Method CheckErrors() As %Status
+{
+	
+		Set tSC = $$$OK
+		Set s = ..GetEventLog("error","","",.err,.new)
+	
+		Set s1 = $$$AssertEquals(new,3,"Should be 3 new errors(found: "_+$Get(new)_")")
+		
+		
+		Set text = $Get(err(1,"Text"))
+		Set eText = "Test error case"
+		Set s2 = 
+		  $$$AssertTrue(text[eText,"Should contain '"_eText_"'(found: '"_text_"')")
+		
+		if 's1||'s2 set tSC=..Error("Expected error entries don't match")
+		
+		Quit tSC
+}
+
+
 
 Method CheckORMO01Result() As %Library.Status
 {
@@ -94,6 +138,5 @@ Method CheckORMO01Result() As %Library.Status
 	
 	Quit $$$OK
 }
-
 
 }

@@ -1,4 +1,5 @@
-Class Demo.BusinessService.PatientWS extends  EnsLib.REST.Service {
+Class Demo.BusinessService.PatientWS Extends EnsLib.REST.Service
+{
 
 Parameter ADAPTER = "EnsLib.HTTP.InboundAdapter";
 
@@ -18,7 +19,6 @@ XData UrlMap
 /// Business Service must be started
 /// Via Private Apache: http://localhost:57775/Rest/Demo.BusinessService.PatientWS/Patients/PatientID/1234
 ///  -> Requires definition of WebApplication
-
 Method findpatient(pInput As %Library.AbstractStream, Output pOutput As %Stream.Object, ID As %Library.String) As %Status
 {
 	$$$TRACE("FindPatient: "_ID)
@@ -43,10 +43,6 @@ Method findpatient(pInput As %Library.AbstractStream, Output pOutput As %Stream.
 		Set tSC=$$$SystemError
 	}
 	Quit tSC
-   
 }
-
-
-
 
 }

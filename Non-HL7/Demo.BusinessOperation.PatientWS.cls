@@ -1,4 +1,5 @@
-Class Demo.BusinessOperation.PatientWS extends  EnsLib.REST.Operation {
+Class Demo.BusinessOperation.PatientWS Extends EnsLib.REST.Operation
+{
 
 Parameter ADAPTER = "EnsLib.HTTP.OutboundAdapter";
 
@@ -6,8 +7,9 @@ Property Adapter As EnsLib.HTTP.OutboundAdapter;
 
 Parameter INVOCATION = "Queue";
 
-//Check if PatientID exists in the database
-Method PatientExists (pRequest As Demo.Message.PatientRequest, Output pResponse As Demo.Message.PatientResponse) As %Status
+// Check if PatientID exists in the database
+
+Method PatientExists(pRequest As Demo.Message.PatientRequest, Output pResponse As Demo.Message.PatientResponse) As %Status
 {
    
    try {
@@ -43,4 +45,5 @@ XData MessageMap
   </MapItem>
 </MapItems>
 }
+
 }
