@@ -1,4 +1,4 @@
-Class Tutorial.ProductionTest Extends %UnitTest.TestProduction
+Class UnitTest.NonHL7.TestProduction Extends %UnitTest.TestProduction
 {
 
 Parameter PRODUCTION = "Tutorial.ExampleProduction";
