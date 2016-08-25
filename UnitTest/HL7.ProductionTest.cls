@@ -7,8 +7,11 @@ Parameter PRODUCTION = "Tutorial.HL7ExampleProduction";
 
 Method OnBeforeProductionStart() As %Library.Status
 {
+	//MainDir where HL7 test messages are
 	Set ..MainDir = "C:\Users\fdescamp\Documents\3. Documentation\Source Control\Git+Jenkins\GitHubRepository\Dev1\UnitTest\"
 	
+	//HL7INputDir and outputdir are automatically created from Intersystems install dir
+	//C:\InterSystems\TestAuto624\HL7
 	Set s = ..ChangeSetting(
 	"Tutorial.HL7ExampleProduction","TutorialHL7FileOperation", 
 	"FilePath",..HL7OutputDir,0)
@@ -17,24 +20,60 @@ Method OnBeforeProductionStart() As %Library.Status
 	
 	Set s0 = ..ChangeSetting("Tutorial.HL7ExampleProduction",
 	 "TutorialHL7FileService","FilePath",..HL7InputDir,0)
-	
+
 	Do $$$AssertEquals(s0,$$$OK)
 	
+
 	Set s1=$$$AssertStatusOK(..CreateMainDirTree())
-	
 	Set s2 = $$$AssertStatusOK(..CleanUpDirectory(..HL7InputDir))
 	Set s3 = $$$AssertStatusOK(..CleanUpDirectory(..HL7OutputDir))
+	set s4 = $$$AssertStatusOK(..CopyFile("ORMO01_In.txt",..MainDir))
+
+	if 's||'s0||'s1||'s2||'s3||'s4
 	
-	Set s4 = $$$AssertStatusOK(..CopyFile("ORMO01_In.txt",..MainDir))
-	
-	if 's||'s0||'s1||'s2||'s3||'s4 
 	{Quit ..Error("Error in OnBeforeProductionStart()")}
 	
 	Quit $$$OK
 }
 
-Method CheckResults() As %Library.Status
+Method OnAfterProductionStart() As %Status
 {
+
+ 
+		Set request = ##class(Ens.StringContainer).%New("1")
+		Set tSC = ..SendRequest( "FindPatientinDB" ,request,.response,1,40)
+		Do $$$AssertEquals(response,"1","PatientID 1 should exist in DB.")		
+		
+		
+		Set request = ##class(Ens.StringContainer).%New("123456")
+		Set tSC = ..SendRequest( "FindPatientinDB" ,request,.response,1,40)
+		Do $$$AssertEquals(response,"0","PatientID 123456 should not exist in DB.")		
+			
+		
+		/*Set request = ##class(Ens.StringRequest).%New()
+		set request.StringValue="Hello Ensemble"
+		Set tSC = ..SendRequest( "Tutorial.ExampleOperation" ,request,.response,1,40)
+		Do $$$AssertEquals(response.StringValue,"OK","Response should contain OK.")		
+		Set request.StringValue=""
+		Set tSC = ..SendRequest( "Tutorial.ExampleOperation" ,request, .response,1,40)*/
+		
+		Quit $$$OK
+}
+
+
+Method CheckResults(ByRef Log As %String, New As %String) As %Library.Status
+{
+	set tSC=$$$OK
+	
+	//ORMO01 should be sent to FileOperation 
+	set tSC=..CheckORMO01Result()	
+
+	Quit tSC
+}
+
+Method CheckORMO01Result() As %Library.Status
+{
+	//Check Data Transformation vs. ORM01Out_reference.txt file
 	Do $$$AssertStatusOK(..CompareFiles("ORMO01Out.txt",,,..MainDir))
 	
 	&SQL(Select TOP 1 ID,ActivityName,ErrorMsg,ReturnValue,Reason 
@@ -45,6 +84,7 @@ Method CheckResults() As %Library.Status
 	
 	Set r = $$$AssertEquals(SQLCODE, 0, "Rule Log Entry")
 	
+	//If ORMO01 then send to HL7FileOperation and transform message 
 	if r {
 		
 		Set r1=$$$AssertEquals(Rea,"rule#1:when#1", "Rule:("_Rea_")")
@@ -52,7 +92,6 @@ Method CheckResults() As %Library.Status
 		
 	}
 	
-
 	Quit $$$OK
 }
 
