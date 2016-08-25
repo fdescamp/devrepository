@@ -59,7 +59,11 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <!-- Run tests -->
 <!--<Invoke Class="UnitTest.Summit" Method="RunRecursive" CheckStatus="true" />-->
 <!-- HL7 Test-->
-<Invoke Class="Tutorial.HL7ProductionTest" Method="Run" CheckStatus="true" />
+<Invoke Class="UnitTest.Manager" Method="RunTest" CheckStatus="true" >
+<Arg name="testspec" Value="Tutorial" />
+<Arg name="qspec" Value="/recursive=1" />
+</Invoke>
+
 <!-- Output test results -->
 <Invoke Class="UnitTest.Manager" Method="OutputResultsXml" CheckStatus="true">
 <Arg name="pFileName" Value="${SRCDIR}/testResult.xml" />
