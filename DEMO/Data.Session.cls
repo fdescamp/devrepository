@@ -27,6 +27,7 @@ ClassMethod GetConflictsById(pId As %String) As %List
 	set conflictList=""
 	set conflictList=conflictList_..GetTimeConflicts(pId)
 	//Check if session has number of attendees greater than room capacity
+	//Uncomment to fix build failure
 	set conflictList=conflictList_..GetAttendeeConflicts(pId)
 	
 	quit conflictList
