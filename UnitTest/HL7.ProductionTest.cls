@@ -1,18 +1,17 @@
-Class Tutorial.HL7ProductionTest Extends %UnitTest.TestProduction
+Class HL7.ProductionTest Extends %UnitTest.TestProduction
 {
 
 /// Class name of the production.  It must contain the production class name.
 Parameter PRODUCTION = "Tutorial.HL7ExampleProduction";
 
+
 Method OnBeforeProductionStart() As %Library.Status
 {
-	Set ..MainDir = "C:\Users\fdescamp\Documents\3. Documentation\Source Control\Git+Jenkins\HL7Testing"
-	Set ^UnitTestRoot=""
+	Set ..MainDir = "C:\Users\fdescamp\Documents\3. Documentation\Source Control\Git+Jenkins\GitHubRepository\Dev1\UnitTest\"
 	
 	Set s = ..ChangeSetting(
 	"Tutorial.HL7ExampleProduction","TutorialHL7FileOperation", 
 	"FilePath",..HL7OutputDir,0)
-	
 	
 	Do $$$AssertEquals(s,$$$OK)
 	
@@ -56,5 +55,6 @@ Method CheckResults() As %Library.Status
 
 	Quit $$$OK
 }
+
 
 }
