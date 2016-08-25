@@ -5,21 +5,22 @@ Parameter INVOCATION = "Queue";
 
 Method Test(pRequest As Ens.StringRequest, Output pResponse As Ens.StringResponse) As %Status
 {
+	Set tSC=$$$OK
 	Set pResponse=##class(Ens.StringResponse).%New()	
 	
 	if (pRequest.StringValue="")
 	{
-		Set pResponse.StringValue="ERROR"
-		Set tSC=$$$ERROR($$$GeneralError, "Test error case")
+		//Set pResponse.StringValue="ERROR"
+		//Set tSC=$$$ERROR($$$GeneralError, "Test error case")
 		
 	}
 	
-	/*else
+	else
 	{
 	
 		Set pResponse.StringValue="OK"		
 		Set tSC=$$$OK
-	}*/
+	}
 	
 	$$$LOGINFO(pResponse.StringValue)
 
