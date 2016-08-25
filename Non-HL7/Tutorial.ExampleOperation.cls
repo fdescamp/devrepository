@@ -14,12 +14,12 @@ Method Test(pRequest As Ens.StringRequest, Output pResponse As Ens.StringRespons
 		
 	}
 	
-	else
+	/*else
 	{
 	
 		Set pResponse.StringValue="OK"		
 		Set tSC=$$$OK
-	}
+	}*/
 	
 	$$$LOGINFO(pResponse.StringValue)
 
