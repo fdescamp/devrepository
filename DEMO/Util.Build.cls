@@ -45,10 +45,21 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Arg name="recursive" Value="1" />
 </Invoke>
 
+<!-- Invoke compile method -->
+<Invoke Class="%SYSTEM.OBJ" Method="ImportDir" CheckStatus="true">
+<Arg name="dir" Value="${SRCDIR}HL7" />
+<Arg name="wildcards" Value="*.cls" />
+<Arg name="qspec" Value="c" />
+<Arg name="errorlog" Value="" />
+<Arg name="recursive" Value="1" />
+</Invoke>
+
 <!-- You may also invoke some post-compile actions like testing or data load here -->
 
 <!-- Run tests -->
-<Invoke Class="UnitTest.Summit" Method="RunRecursive" CheckStatus="true" />
+<!--<Invoke Class="UnitTest.Summit" Method="RunRecursive" CheckStatus="true" />-->
+<!-- HL7 Test-->
+<Invoke Class="Tutorial.HL7ProductionTest" Method="Run" CheckStatus="true" />
 <!-- Output test results -->
 <Invoke Class="UnitTest.Manager" Method="OutputResultsXml" CheckStatus="true">
 <Arg name="pFileName" Value="${SRCDIR}/testResult.xml" />
