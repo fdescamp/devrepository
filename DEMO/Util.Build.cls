@@ -62,14 +62,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Arg name="errorlog" Value="" />
 <Arg name="recursive" Value="1" />
 </Invoke>
-<!-- Invoke compile method -->
-<Invoke Class="%SYSTEM.OBJ" Method="ImportDir" CheckStatus="true">
-<Arg name="dir" Value="${SRCDIR}UnitTest" />
-<Arg name="wildcards" Value="*.cls" />
-<Arg name="qspec" Value="c" />
-<Arg name="errorlog" Value="" />
-<Arg name="recursive" Value="1" />
-</Invoke>
+
 
 
 
