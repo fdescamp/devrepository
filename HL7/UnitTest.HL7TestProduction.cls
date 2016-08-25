@@ -7,7 +7,7 @@ Parameter PRODUCTION = "Tutorial.HL7ExampleProduction";
 Method OnBeforeProductionStart() As %Library.Status
 {
 	//MainDir where HL7 test messages are
-	Set ..MainDir = "C:\Users\fdescamp\Documents\3. Documentation\Source Control\Git+Jenkins\GitHubRepository\Dev1\UnitTest\"
+	Set ..MainDir = "C:\Users\fdescamp\Documents\3. Documentation\Source Control\Git+Jenkins\GitHubRepository\Dev1\HL7\"
 	
 	//HL7INputDir and outputdir are automatically created from Intersystems install dir
 	//C:\InterSystems\TestAuto624\HL7

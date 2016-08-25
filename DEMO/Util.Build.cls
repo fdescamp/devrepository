@@ -75,13 +75,14 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 
 <!-- You may also invoke some post-compile actions like testing or data load here -->
 
-<!-- Run tests -->
+<!-- Run Cache tests -->
 <Invoke Class="UnitTest.Summit" Method="RunRecursive" CheckStatus="true" />
-<!-- HL7 Test-->
- <!--<Invoke Class="UnitTest.Manager" Method="RunTest" CheckStatus="true" >
-<Arg name="testspec" Value="HL7" />
+
+<!-- HL7 production Test-->
+<Invoke Class="UnitTest.Manager" Method="RunTest" CheckStatus="true" >
+<Arg name="testspec" Value="UnitTest.HL7TestProduction" />
 <Arg name="qspec" Value="/recursive=1" />
-</Invoke>-->
+</Invoke>
 
 <!-- Output test results -->
 <Invoke Class="UnitTest.Manager" Method="OutputResultsXml" CheckStatus="true">
