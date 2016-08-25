@@ -10,8 +10,9 @@ Method Test(pRequest As Ens.StringRequest, Output pResponse As Ens.StringRespons
 	
 	if (pRequest.StringValue="")
 	{
-		//Set pResponse.StringValue="ERROR"
-		//Set tSC=$$$ERROR($$$GeneralError, "Test error case")
+		//Generate error in build 
+		Set pResponse.StringValue="ERROR"
+		Set tSC=$$$ERROR($$$GeneralError, "Test error case")
 		
 	}
 	
