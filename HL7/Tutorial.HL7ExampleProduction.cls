@@ -22,8 +22,6 @@ XData ProductionDefinition
     <Setting Target="Host" Name="Filename">ORMO01Out.txt</Setting>
     <Setting Target="Adapter" Name="FilePath">C:\InterSystems\TestAuto624\HL7\Out</Setting>
   </Item>
-  <Item Name="FindPatientinDB" Category="" ClassName="Demo.BusinessOperation.PatientDB" PoolSize="1" Enabled="true" Foreground="false" Comment="" LogTraceEvents="false" Schedule="">
-  </Item>
 </Production>
 }
 
