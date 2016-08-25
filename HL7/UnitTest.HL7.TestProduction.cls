@@ -1,4 +1,4 @@
-Class UnitTest.HL7TestProduction  Extends %UnitTest.TestProduction
+Class UnitTest.HL7.TestProduction Extends %UnitTest.TestProduction
 {
 
 /// Class name of the production.  It must contain the production class name.

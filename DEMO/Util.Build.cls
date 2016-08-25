@@ -78,7 +78,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 
 <!-- HL7 production Test-->
 <Invoke Class="UnitTest.Manager" Method="RunTest" CheckStatus="true" >
-<Arg name="testspec" Value="UnitTest.HL7TestProduction" />
+<Arg name="testspec" Value="UnitTest.HL7.TestProduction" />
 <Arg name="qspec" Value="/recursive=1" />
 </Invoke>
 <!-- Output test results -->
