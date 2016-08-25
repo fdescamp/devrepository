@@ -80,7 +80,6 @@ ClassMethod GetConflictCount(pId As %String) As %Integer
 	quit $listlength(conflicts)
 }
 
-
 /// Get attendee conflicts. Happens when a session has number of attendees
 /// greater than room capacity
 ClassMethod GetAttendeeConflicts(pId As %String) As %List

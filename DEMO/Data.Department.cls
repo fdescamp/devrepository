@@ -3,6 +3,7 @@ Class Data.Department Extends (%Persistent, %ZEN.DataModel.Adaptor)
 {
 
 Property DepartmentName As %String [ Required ];
+
 Property Test As %String;
 
 Storage Default
@@ -13,6 +14,9 @@ Storage Default
 </Value>
 <Value name="2">
 <Value>DepartmentName</Value>
+</Value>
+<Value name="3">
+<Value>Test</Value>
 </Value>
 </Data>
 <DataLocation>^Data.DepartmentD</DataLocation>
