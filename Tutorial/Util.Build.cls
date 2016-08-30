@@ -16,7 +16,9 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <If Condition="&quot;${SRCDIR}&quot;=&quot;&quot;"><Error /></If>
 
 <!-- Namespace is named JOBNAME-BUILD to avoid wiping non-build namespace -->
-<Var Name="NAMESPACE" Value="${JOBNAME}-BUILD" />
+<!--<Var Name="NAMESPACE" Value="${JOBNAME}-BUILD" />-->
+<!-- FD modified -->
+<Var Name="NAMESPACE" Value="${NAMESPACE}-BUILD"/>
 
 <!-- Define QA filepath for db -->
 <Var Name="DBDIR" Value="C:/InterSystems/HS20164QA/" />
@@ -34,11 +36,11 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 </Configuration>
 
 <!-- Import build class to new environment -->
-<Import File="${SRCDIR}Tutorial/Util.Build.cls" Flags="c" />
+<Import File="${SRCDIR}${NAMESPACE}/Util.Build.cls" Flags="c" />
 
 <!-- Invoke compile method -->
 <Invoke Class="%SYSTEM.OBJ" Method="ImportDir" CheckStatus="true">
-<Arg name="dir" Value="${SRCDIR}Tutorial" />
+<Arg name="dir" Value="${SRCDIR}${NAMESPACE}" />
 <Arg name="wildcards" Value="*.cls" />
 <Arg name="qspec" Value="c" />
 <Arg name="errorlog" Value="" />
@@ -46,7 +48,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 </Invoke>
 
 <Invoke Class="Util.Build" Method="UnitTestSetup" CheckStatus="1">
-<Arg Value="${SRCDIR}Tutorial"/>
+<Arg Value="${SRCDIR}${NAMESPACE}"/>
 </Invoke>
 
 <!-- You may also invoke some post-compile actions like testing or data load here -->
@@ -54,7 +56,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Invoke Class="%UnitTest.Manager" Method="RunTest" CheckStatus="true" />
 <!-- Output test results -->
 <!--<Invoke Class="UnitTest.Manager" Method="OutputResultsXml" CheckStatus="true">
-<Arg name="pFileName" Value="${SRCDIR}/testSummitResult.xml" />
+<Arg name="pFileName" Value="${SRCDIR}/${NAMESPACE}/UnitTestResult.xml" />
 </Invoke>-->
 
 
@@ -75,8 +77,12 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 }
 
 /// This method is called to pass parameters into generated build method
-ClassMethod Build(pJobName As %String, pSrcDir As %String) As %Status
+ClassMethod Build(pJobName As %String, pSrcDir As %String,pNamespace As %String) As %Status
 {
+	//FD: added namespace specification
+	set vars("NAMESPACE")=$g(pNamespace)
+	//
+	
 	set vars("JOBNAME")=$g(pJobName)
 	set vars("SRCDIR")=##class(%File).NormalizeDirectory($g(pSrcDir))
 
@@ -87,12 +93,139 @@ ClassMethod Build(pJobName As %String, pSrcDir As %String) As %Status
 }
 
 
-/// This method is called to set ^UnitTestRoot path
+
+/// FD This method is called to set ^UnitTestRoot path
 ClassMethod UnitTestSetup(pUnitTestDir As %String) As %Status
 {
 	Set ^UnitTestRoot=pUnitTestDir
 
 	Quit 1
+}
+
+///FD call to save output result of unit test - Use for jenkins
+ClassMethod OutputResultsXml(pFileName As %String) As %Status
+{
+	set File=##class(%File).%New(pFileName)
+	set i=$o(^UnitTest.Result(""),-1)
+	if i="" quit $$$OK // no results
+	
+	kill ^||TMP ; results global
+
+
+	set suite="" for {
+		set suite=$o(^UnitTest.Result(i,suite))
+		quit:suite=""
+
+		set ^||TMP("S",suite,"time")=$lg(^UnitTest.Result(i,suite),2)
+		
+		set case="" for {
+			set case=$o(^UnitTest.Result(i,suite,case))
+			quit:case=""
+			
+			if $i(^||TMP("S",suite,"tests"))
+			set ^||TMP("S",suite,"C",case,"time")=$lg(^UnitTest.Result(i,suite),2)
+
+			set method="" for {
+				set method=$o(^UnitTest.Result(i,suite,case,method))
+				quit:method=""
+
+				set ^||TMP("S",suite,"C",case,"M",method,"time")=$lg(^UnitTest.Result(i,suite,case,method),2)
+
+				set assert="" for {
+					set assert=$o(^UnitTest.Result(i,suite,case,method,assert))
+					quit:assert=""
+					if $i(^||TMP("S",suite,"assertions"))
+					if $i(^||TMP("S",suite,"C",case,"assertions"))
+					if $i(^||TMP("S",suite,"C",case,"M",method,"assertions"))
+					if $lg(^UnitTest.Result(i,suite,case,method,assert))=0 {
+						if $i(^||TMP("S",suite,"failures"))
+						if $i(^||TMP("S",suite,"C",case,"failures"))
+						if $i(^||TMP("S",suite,"C",case,"M",method,"failures"))
+						set ^||TMP("S",suite,"C",case,"M",method,"failure")=$get(^||TMP("S",suite,"C",case,"M",method,"failure"))
+							_$lg(^UnitTest.Result(i,suite,case,method,assert),2)
+							_": "_$lg(^UnitTest.Result(i,suite,case,method,assert),3)
+							_$C(13,10)
+					}
+				}
+
+				if ($lg(^UnitTest.Result(i,suite,case,method))=0)
+				&& ('$d(^||TMP("S",suite,"C",case,"M",method,"assertions"))) {
+					if $i(^||TMP("S",suite,"failures"))
+					if $i(^||TMP("S",suite,"C",case,"failures"))
+					if $i(^||TMP("S",suite,"C",case,"M",method,"failures"))
+					set ^||TMP("S",suite,"C",case,"M",method,"failure")=$get(^||TMP("S",suite,"C",case,"M",method,"failure"))
+						_$lg(^UnitTest.Result(i,suite,case,method),3)
+						_": "_$lg(^UnitTest.Result(i,suite,case,method),4)
+						_$C(13,10)
+				}
+
+			}
+			
+			if $lg(^UnitTest.Result(i,suite,case))=0
+			&& ('$d(^||TMP("S",suite,"C",case,"M"))) {
+				if $i(^||TMP("S",suite,"failures"))
+				if $i(^||TMP("S",suite,"C",case,"failures"))
+				if $i(^||TMP("S",suite,"C",case,"M",case,"failures"))
+				set ^||TMP("S",suite,"C",case,"M",case,"failure")=$get(^||TMP("S",suite,"C",case,"M",case,"failure"))
+					_$lg(^UnitTest.Result(i,suite,case),3)
+					_": "_$lg(^UnitTest.Result(i,suite,case),4)
+					_$C(13,10)
+			}
+
+		}
+	}
+	
+	do File.Open("WSN")
+	do File.WriteLine("<?xml version=""1.0"" encoding=""UTF-8"" ?>")
+	do File.WriteLine("<testsuites>")
+	set suite="" for {
+		set suite=$o(^||TMP("S",suite))
+		quit:suite=""
+
+		do File.Write("<testsuite")
+		do File.Write(" name="""_$zcvt(suite,"O","XML")_"""")
+		do File.Write(" assertions="""_$g(^||TMP("S",suite,"assertions"))_"""")
+		do File.Write(" time="""_$g(^||TMP("S",suite,"time"))_"""")
+		do File.Write(" tests="""_$g(^||TMP("S",suite,"tests"))_"""")
+		do File.WriteLine(">")
+
+		set case="" for {
+			set case=$o(^||TMP("S",suite,"C",case))
+			quit:case=""
+
+			do File.Write("<testsuite")
+			do File.Write(" name="""_$zcvt(case,"O","XML")_"""")
+			do File.Write(" assertions="""_$g(^||TMP("S",suite,"C",case,"assertions"))_"""")
+			do File.Write(" time="""_$g(^||TMP("S",suite,"C",case,"time"))_"""")
+			do File.Write(" tests="""_$g(^||TMP("S",suite,"C",case,"tests"))_"""")
+			do File.WriteLine(">")
+
+			
+			set method="" for {
+				set method=$o(^||TMP("S",suite,"C",case,"M",method))
+				quit:method=""
+
+				do File.Write("<testcase")
+				do File.Write(" name="""_$zcvt(method,"O","XML")_"""")
+				do File.Write(" assertions="""_$g(^||TMP("S",suite,"C",case,"M",method,"assertions"))_"""")
+				do File.Write(" time="""_$g(^||TMP("S",suite,"C",case,"M",method,"time"))_"""")
+				do File.WriteLine(">")
+				if $d(^||TMP("S",suite,"C",case,"M",method,"failure")) {
+					do File.Write("<failure type=""cache-error"" message=""Cache Error"">")
+					do File.Write($zcvt(^||TMP("S",suite,"C",case,"M",method,"failure"),"O","XML"))
+					do File.WriteLine("</failure>")
+				}
+				do File.WriteLine("</testcase>")
+			}
+			do File.WriteLine("</testsuite>")
+		}
+		do File.WriteLine("</testsuite>")
+	}
+	do File.WriteLine("</testsuites>")
+
+	do File.Close()
+	kill ^||TMP
+	quit $$$OK
 }
 
 

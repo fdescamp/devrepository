@@ -26,7 +26,9 @@ echo set sc=$SYSTEM.OBJ.Load("%SRCDIR%\Tutorial\Util.Build.cls","ck") >inFile
 echo if sc'=1 do $SYSTEM.OBJ.DisplayError(sc) >>inFile
 
 :: NOW, PERFORM BUILD
-echo if sc=1 set sc=##class(Util.Build).Build("%JOB_NAME%","%SRCDIR%") >>inFile
+:: FD modified to add multiple namespace
+set NAMESPACE="TUTORIAL"
+echo if sc=1 set sc=##class(Util.Build).Build("%JOB_NAME%","%SRCDIR%","%NAMESPACE%") >>inFile
 
 :: IF UNSUCCESSFULL, DISPLAY ERROR
 echo if sc'=1 do $SYSTEM.OBJ.DisplayError(sc) >>inFile
