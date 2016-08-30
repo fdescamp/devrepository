@@ -80,7 +80,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 ClassMethod Build(pJobName As %String, pSrcDir As %String,pNamespace As %String) As %Status
 {
 	//FD: added namespace specification
-	set vars("NAMESPACEBUILD")=$g(pNamespace)
+	set vars("NAMESPACE")=$g(pNamespace)
 	//
 	
 	set vars("JOBNAME")=$g(pJobName)
