@@ -28,7 +28,8 @@ echo if sc'=1 do $SYSTEM.OBJ.DisplayError(sc) >>inFile
 :: FD modified to add multiple namespace
 :: Import everything in TUTORIAL namespace
 set NAMESPACE=TUTORIAL
-echo if sc=1 set sc=##class(Util.Build).Build("%JOB_NAME%","%SRCDIR%","%NAMESPACE%") >>inFile
+::echo if sc=1 set sc=##class(Util.Build).Build("%JOB_NAME%","%SRCDIR%","%NAMESPACE%") >>inFile
+echo if sc=1 set sc=##class(Util.Build).Build("%NAMESPACE","%SRCDIR%") >>inFile
 
 :: IF UNSUCCESSFULL, DISPLAY ERROR
 echo if sc'=1 do $SYSTEM.OBJ.DisplayError(sc) >>inFile
