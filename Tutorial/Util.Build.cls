@@ -18,7 +18,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <!-- Namespace is named JOBNAME-BUILD to avoid wiping non-build namespace -->
 <!--<Var Name="NAMESPACE" Value="${JOBNAME}-BUILD" />-->
 <!-- FD modified -->
-<Var Name="NAMESPACE" Value="${NAMESPACE}-BUILD"/>
+<Var Name="NAMESPACE" Value="${NAMESPACE}"/>
 
 <!-- Define QA filepath for db -->
 <Var Name="DBDIR" Value="C:/InterSystems/HS20164QA/" />
@@ -80,7 +80,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 ClassMethod Build(pJobName As %String, pSrcDir As %String,pNamespace As %String) As %Status
 {
 	//FD: added namespace specification
-	set vars("NAMESPACE")=$g(pNamespace)
+	set vars("NAMESPACEBUILD")=$g(pNamespace)
 	//
 	
 	set vars("JOBNAME")=$g(pJobName)

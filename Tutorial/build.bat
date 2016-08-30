@@ -18,7 +18,6 @@ del "%OUTFILE%"
 
 
 :: NOW, PREPARE TO CALL CACHE
-:: Import everything in TUTORIAL namespace
 :: FIRST, LOAD BUILD CLASS TO USER NAMESPACE
 echo set sc=$SYSTEM.OBJ.Load("%SRCDIR%\Tutorial\Util.Build.cls","ck") >inFile
 
@@ -27,6 +26,7 @@ echo if sc'=1 do $SYSTEM.OBJ.DisplayError(sc) >>inFile
 
 :: NOW, PERFORM BUILD
 :: FD modified to add multiple namespace
+:: Import everything in TUTORIAL namespace
 set NAMESPACE=TUTORIAL
 echo if sc=1 set sc=##class(Util.Build).Build("%JOB_NAME%","%SRCDIR%","%NAMESPACE%") >>inFile
 
