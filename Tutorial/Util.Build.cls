@@ -106,6 +106,7 @@ ClassMethod UnitTestSetup(pUnitTestDir As %String) As %Status
 ///FD call to save output result of unit test - Use for jenkins
 ClassMethod OutputResultsXml(pFileName As %String) As %Status
 {
+	set ^zfde(1)=pFileName
 	set File=##class(%File).%New(pFileName)
 	set i=$o(^UnitTest.Result(""),-1)
 	if i="" quit $$$OK // no results
