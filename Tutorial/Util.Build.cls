@@ -54,10 +54,11 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <!-- You may also invoke some post-compile actions like testing or data load here -->
 <!-- Run Cache tests -->
 <Invoke Class="%UnitTest.Manager" Method="RunTest" CheckStatus="true" />
+
 <!-- Output test results -->
-<Invoke Class="Util.Build" Method="OutputResultsXml" CheckStatus="true">
+<!--<Invoke Class="Util.Build" Method="OutputResultsXml" CheckStatus="true">
 <Arg name="pFileName" Value="${SRCDIR}/${NAMESPACE}/UnitTestResult.xml" />
-</Invoke>
+</Invoke>-->
 
 
 </Namespace>
