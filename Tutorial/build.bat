@@ -27,7 +27,7 @@ echo if sc'=1 do $SYSTEM.OBJ.DisplayError(sc) >>inFile
 
 :: NOW, PERFORM BUILD
 :: FD modified to add multiple namespace
-set NAMESPACE="TUTORIAL"
+set NAMESPACE=TUTORIAL
 echo if sc=1 set sc=##class(Util.Build).Build("%JOB_NAME%","%SRCDIR%","%NAMESPACE%") >>inFile
 
 :: IF UNSUCCESSFULL, DISPLAY ERROR
