@@ -27,7 +27,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Namespace Name="${NAMESPACE}" Create="overwrite" 
   Code="${NAMESPACE}" Data="${NAMESPACE}">
 <Configuration>
-<Database Name="${NAMESPACE}" Dir="${DBDIR}db/${NAMESPACE}/" Create="overwrite" InitialSize="1" ExpansionSize="1" />
+<Database Name="${NAMESPACE}" Dir="${DBDIR}db/${JOBNAME}/" Create="overwrite" InitialSize="1" ExpansionSize="1" />
  <CSPApplication name="${NAMESPACE}" Directory="${NAMESPACE}" Url="/csp/${NAMESPACE}"
   Description="Build application" 
   Recurse="true" 
@@ -36,11 +36,11 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 </Configuration>
 
 <!-- Import build class to new environment -->
-<Import File="${SRCDIR}${NAMESPACE}/Util.Build.cls" Flags="c" />
+<Import File="${SRCDIR}${JOBNAME}/Util.Build.cls" Flags="c" />
 
 <!-- Invoke compile method -->
 <Invoke Class="%SYSTEM.OBJ" Method="ImportDir" CheckStatus="true">
-<Arg name="dir" Value="${SRCDIR}${NAMESPACE}" />
+<Arg name="dir" Value="${SRCDIR}${JOBNAME}" />
 <Arg name="wildcards" Value="*.cls" />
 <Arg name="qspec" Value="c" />
 <Arg name="errorlog" Value="" />
@@ -48,7 +48,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 </Invoke>
 
 <Invoke Class="Util.Build" Method="UnitTestSetup" CheckStatus="1">
-<Arg Value="${SRCDIR}${NAMESPACE}"/>
+<Arg Value="${SRCDIR}${JOBNAME}"/>
 </Invoke>
 
 <!-- You may also invoke some post-compile actions like testing or data load here -->
@@ -57,7 +57,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 
 <!-- Output test results -->
 <Invoke Class="Util.Build" Method="OutputResultsXml" CheckStatus="true">
-<Arg name="pFileName" Value="${SRCDIR}/${NAMESPACE}/UnitTestResult.xml" />
+<Arg name="pFileName" Value="${SRCDIR}/${JOBNAME}/UnitTestResult.xml" />
 </Invoke>
 
 
