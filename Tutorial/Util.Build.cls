@@ -18,7 +18,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <!-- Namespace is named JOBNAME-BUILD to avoid wiping non-build namespace -->
 <Var Name="NAMESPACE" Value="${JOBNAME}-BUILD" />
 <!-- FD modified -->
-<!--<Var Name="NAMESPACE" Value="${NAMESPACE}"/>-->
+ <!--<Var Name="NAMESPACE" Value="${NAMESPACE}"/>-->
 
 <!-- Define QA filepath for db -->
 <Var Name="DBDIR" Value="C:/InterSystems/HS20164QA/" />
@@ -56,9 +56,9 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Invoke Class="%UnitTest.Manager" Method="RunTest" CheckStatus="true" />
 
 <!-- Output test results -->
-<Invoke Class="Util.Build" Method="OutputResultsXml" CheckStatus="true">
+ <!--<Invoke Class="Util.Build" Method="OutputResultsXml" CheckStatus="true">
 <Arg name="pFileName" Value="${SRCDIR}/${JOBNAME}/UnitTestResult.xml" />
-</Invoke>
+</Invoke>-->
 
 
 </Namespace>
