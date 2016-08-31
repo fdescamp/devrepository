@@ -19,7 +19,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Var Name="NAMESPACE" Value="${JOBNAME}-BUILD" />
 
 <!-- Define QA filepath for db -->
-<Var Name="DBDIR" Value="C:/InterSystems/HS20164QA/" />
+<Var Name="DBDIR" Value="C:/InterSystems/HS20164DEV1/" />
 
 <!-- Delete old namespace and create new one -->
 <Namespace Name="${NAMESPACE}" Create="overwrite" 
