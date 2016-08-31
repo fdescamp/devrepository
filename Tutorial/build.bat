@@ -28,7 +28,7 @@ echo if sc'=1 do $SYSTEM.OBJ.DisplayError(sc) >>inFile
 :: JOB_NAME will be used to build the new Namespace JOB_NAME-BUILD to validate
 :: Add project to test
 set PROJECT=Tutorial
-echo if sc=1 set sc=##class(Util.Build).Build("%JOB_NAME%","%SRCDIR%","%PROJECT%") >>inFile
+echo if sc=1 set sc=##class(Util.Installer).Build("%JOB_NAME%","%SRCDIR%","%PROJECT%") >>inFile
 
 :: IF UNSUCCESSFULL, DISPLAY ERROR
 echo if sc'=1 do $SYSTEM.OBJ.DisplayError(sc) >>inFile
