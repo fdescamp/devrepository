@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ASCII"?>
+<com.intersys.eclipse.sync.library:AtelierProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:com.intersys.eclipse.sync.library="http:///com/intersys/eclipse/sync/library/model/sync.ecore" name="Tutorial">
+  <resourceList name="Util.Build.cls" localFilePath="file:/C:/Users/fdescamp/Documents/3.%20Documentation/Source%20Control/Git+Jenkins/GitHubRepository/Dev1/Tutorial/Util.Build.cls">
+    <version serverTimestamp="2016-08-30 17:01:25.100" lastUpdateTimestamp="1472601685115" serverDocName="Util.Build.cls"/>
+  </resourceList>
+  <resourceList name="MyPackage.Contact.cls" localFilePath="file:/C:/Users/fdescamp/Documents/3.%20Documentation/Source%20Control/Git+Jenkins/GitHubRepository/Dev1/Tutorial/MyPackage.Contact.cls">
+    <version serverTimestamp="2016-08-30 17:00:34.106" lastUpdateTimestamp="1472601684696" serverDocName="MyPackage.Contact.cls"/>
+  </resourceList>
+  <resourceList name="MyPackage.TestMe.cls" localFilePath="file:/C:/Users/fdescamp/Documents/3.%20Documentation/Source%20Control/Git+Jenkins/GitHubRepository/Dev1/Tutorial/MyPackage.TestMe.cls">
+    <version serverTimestamp="2016-08-30 17:00:34.207" lastUpdateTimestamp="1472601684829" serverDocName="MyPackage.TestMe.cls"/>
+  </resourceList>
+  <resourceList name="MyPackage.Tests.cls" localFilePath="file:/C:/Users/fdescamp/Documents/3.%20Documentation/Source%20Control/Git+Jenkins/GitHubRepository/Dev1/Tutorial/MyPackage.Tests.cls">
+    <version serverTimestamp="2016-08-30 17:00:34.315" lastUpdateTimestamp="1472601684987" serverDocName="MyPackage.Tests.cls"/>
+  </resourceList>
+</com.intersys.eclipse.sync.library:AtelierProject>
