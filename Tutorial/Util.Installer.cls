@@ -15,7 +15,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Var Name="NAMESPACE" Value="${JOBNAME}-BUILD" />
 
 <!-- Define QA filepath for db -->
-<Var Name="DBDIR" Value="C:/InterSystems/HS20164QA/" />
+<Var Name="DBDIR" Value="C:/InterSystems/HS20164DEV1/" />
 
 <!-- Delete old namespace and create new one -->
 <Namespace Name="${NAMESPACE}" Create="overwrite" Code="${NAMESPACE}" Data="${NAMESPACE}">
@@ -41,13 +41,13 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Arg name="recursive" Value="1" />
 </Invoke>
 
-<Invoke Class="Util.Installer" Method="UnitTestSetup" CheckStatus="1">
+<!--<Invoke Class="Util.Installer" Method="UnitTestSetup" CheckStatus="1">
 <Arg Value="${SRCDIR}${PROJECT}"/>
-</Invoke>
+</Invoke>-->
 
 <!-- You may also invoke some post-compile actions like testing or data load here -->
 <!-- Run Cache tests -->
-<Invoke Class="%UnitTest.Manager" Method="RunTest" CheckStatus="true" />
+ <!--<Invoke Class="%UnitTest.Manager" Method="RunTest" CheckStatus="true" />-->
 
 <!-- Output test results -->
  <!--<Invoke Class="Util.Build" Method="OutputResultsXml" CheckStatus="true">
