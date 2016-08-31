@@ -50,9 +50,6 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Arg Value="${SRCDIR}Tutorial"/>
 </Invoke>
 
-<Invoke Class="%UnitTest.Manager" Method="RunTest" CheckStatus="true" >
-</Invoke>
-
 
 
 </Namespace>
