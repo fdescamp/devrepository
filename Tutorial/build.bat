@@ -3,9 +3,10 @@
 :::::::::::::::::::::::
 ::
 :: PATH TO CACHE DIRECTORY AND EXECUTABLES
-set CACHEDIR=C:\InterSystems\HS20164DEV1
+::set CACHEDIR=C:\InterSystems\HS20164DEV1
+set CACHEDIR=C:\InterSystems\%CACHEINSTANCE%
 set CACHEBIN=%CACHEDIR%\bin\cache
-set CACHEINSTANCE=HS20164DEV1
+::set CACHEINSTANCE=HS20164DEV1
 
 :: Check build variables
 IF NOT DEFINED WORKSPACE EXIT 1
@@ -20,13 +21,13 @@ del "%OUTFILE%"
 :: NOW, PREPARE TO CALL CACHE
 ::
 :: FIRST, LOAD BUILD CLASS TO USER NAMESPACE
-echo set sc=$SYSTEM.OBJ.Load("%SRCDIR%\Tutorial\Util.Build.cls","ck") >inFile
+echo set sc=$SYSTEM.OBJ.Load("%SRCDIR%\%PROJECT%\Util.Build.cls","ck") >inFile
 
 :: IF UNSUCCESSFULL, DISPLAY ERROR
 echo if sc'=1 do $SYSTEM.OBJ.DisplayError(sc) >>inFile
 
 :: NOW, PERFORM BUILD
-echo if sc=1 set sc=##class(Util.Build).Build("%JOB_NAME%","%SRCDIR%") >>inFile
+echo if sc=1 set sc=##class(Util.Build).Build("%JOB_NAME%","%SRCDIR%","%PROJECT%","%CACHEDIR%") >>inFile
 
 :: IF UNSUCCESSFULL, DISPLAY ERROR
 echo if sc'=1 do $SYSTEM.OBJ.DisplayError(sc) >>inFile

@@ -19,7 +19,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Var Name="NAMESPACE" Value="${JOBNAME}-BUILD" />
 
 <!-- Define QA filepath for db -->
-<Var Name="DBDIR" Value="C:/InterSystems/HS20164DEV1/" />
+<Var Name="DBDIR" Value="${CACHEDIR}" />
 
 <!-- Delete old namespace and create new one -->
 <Namespace Name="${NAMESPACE}" Create="overwrite" 
@@ -38,7 +38,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 
 <!-- Invoke compile method -->
 <Invoke Class="%SYSTEM.OBJ" Method="ImportDir" CheckStatus="true">
-<Arg name="dir" Value="${SRCDIR}Tutorial" />
+<Arg name="dir" Value="${SRCDIR}${PROJECT}" />
 <Arg name="wildcards" Value="*.cls" />
 <Arg name="qspec" Value="c" />
 <Arg name="errorlog" Value="" />
@@ -47,13 +47,16 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 
 <!-- You may also invoke some post-compile actions like testing or data load here -->
 <Invoke Class="Util.Build" Method="UnitTestSetup" CheckStatus="1">
-<Arg Value="${SRCDIR}Tutorial"/>
+<Arg Value="${SRCDIR}${PROJECT}"/>
 </Invoke>
 
 <!-- Use RunTest if we want classes to be deleted from namespace -->
 <!-- /nodelete -->
 <Invoke Class="%UnitTest.Manager" Method="DebugRunTestCase" CheckStatus="true" >
 </Invoke>
+<!--<Invoke Class="%UnitTest.Manager" Method="RunTest" CheckStatus="true" >
+</Invoke>-->
+
 
 <!-- Output test results -->
 <Invoke Class="Util.Build" Method="OutputResultsXml" CheckStatus="true">
@@ -83,10 +86,12 @@ ClassMethod UnitTestSetup(pUnitTestDir As %String) As %Status
 	Quit 1
 }
 /// This method is called to pass parameters into generated build method
-ClassMethod Build(pJobName As %String, pSrcDir As %String) As %Status
+ClassMethod Build(pJobName As %String, pSrcDir As %String,pProject As %String, pCacheDir As %String) As %Status
 {
 	set vars("JOBNAME")=$g(pJobName)
 	set vars("SRCDIR")=##class(%File).NormalizeDirectory($g(pSrcDir))
+	set vars("PROJECT")=$g(pProject)
+	set vars("CACHEDIR")=$g(pCacheDir)
 
 	Set pLogLevel=3
 	Set sc=..RunBuildManifest(.vars, .pLogLevel)
