@@ -57,7 +57,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 
 <!-- Output test results -->
 <Invoke Class="Util.Build" Method="OutputResultsXml" CheckStatus="true">
-<Arg name="pFileName" Value="${SRCDIR}/Tutorial/TestResult.xml" />
+<Arg name="pFileName" Value="${SRCDIR}/TestResult.xml" />
 </Invoke>
 
 
