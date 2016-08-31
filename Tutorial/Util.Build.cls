@@ -44,9 +44,19 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <Arg name="errorlog" Value="" />
 <Arg name="recursive" Value="1" />
 </Invoke>
+
 <!-- You may also invoke some post-compile actions like testing or data load here -->
+<Invoke Class="Util.Build" Method="UnitTestSetup" CheckStatus="1">
+<Arg Value="${SRCDIR}Tutorial"/>
+</Invoke>
 
+<Invoke Class="%UnitTest.Manager" Method="RunTest" CheckStatus="true" >
+</Invoke>
 
+<!-- Output test results -->
+<Invoke Class="UnitTest.Manager" Method="OutputResultsXml" CheckStatus="true">
+<Arg name="pFileName" Value="${SRCDIR}/Tutorial/TestResult.xml" />
+</Invoke>
 
 
 </Namespace>
@@ -65,6 +75,13 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 </Manifest>
 }
 
+/// FD This method is called to set ^UnitTestRoot path
+ClassMethod UnitTestSetup(pUnitTestDir As %String) As %Status
+{
+	Set ^UnitTestRoot=pUnitTestDir
+
+	Quit 1
+}
 /// This method is called to pass parameters into generated build method
 ClassMethod Build(pJobName As %String, pSrcDir As %String) As %Status
 {
