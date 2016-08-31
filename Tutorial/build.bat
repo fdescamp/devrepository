@@ -20,7 +20,7 @@ del "%OUTFILE%"
 :: NOW, PREPARE TO CALL CACHE
 ::
 :: FIRST, LOAD BUILD CLASS TO USER NAMESPACE
-echo set sc=$SYSTEM.OBJ.Load("%SRCDIR%\DEMO\Util.Build.cls","ck") >inFile
+echo set sc=$SYSTEM.OBJ.Load("%SRCDIR%\Tutorial\Util.Build.cls","ck") >inFile
 
 :: IF UNSUCCESSFULL, DISPLAY ERROR
 echo if sc'=1 do $SYSTEM.OBJ.DisplayError(sc) >>inFile
