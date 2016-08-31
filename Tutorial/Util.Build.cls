@@ -51,8 +51,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 </Invoke>
 
 <Invoke Class="%UnitTest.Manager" Method="DebugRunTestCase" CheckStatus="true" >
-<Arg name="testspec" Value="" />
-<Arg name="qspec" Value="/recursive=1" />
+
 </Invoke>
 
 
