@@ -15,10 +15,10 @@ Method TestAdd()
 }*/
 
 //Developper 2: Add new division test
- /*Method TestDivision()
+Method TestDivision()
 {
 	do $$$AssertEquals(##class(MyPackage.Math).Division(4,2),2, "Test Division (4,2)=2")
-}*/
+}
 
 
 }

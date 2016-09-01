@@ -85,8 +85,9 @@ ClassMethod UnitTestSetup(pUnitTestDir As %String) As %Status
 
 	Quit 1
 }
+
 /// This method is called to pass parameters into generated build method
-ClassMethod Build(pJobName As %String, pSrcDir As %String,pProject As %String, pCacheDir As %String) As %Status
+ClassMethod Build(pJobName As %String, pSrcDir As %String, pProject As %String, pCacheDir As %String) As %Status
 {
 	set vars("JOBNAME")=$g(pJobName)
 	set vars("SRCDIR")=##class(%File).NormalizeDirectory($g(pSrcDir))
@@ -105,7 +106,6 @@ ClassMethod RunBuildManifest(ByRef pVars, pLogLevel As %Integer, pInstaller As %
 	#; Let our XGL document generate code for this method.
 	quit ##class(%Installer.Manifest).%Generate(%compiledclass, %code, "BuildManifest")
 }
-
 
 ClassMethod OutputResultsXml(pFileName As %String) As %Status
 {
