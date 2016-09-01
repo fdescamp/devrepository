@@ -8,6 +8,7 @@ Method TestAdd()
 }
 
 // Developper 1: Add new substract test
+
 Method TestSubstract()
 {
 	do $$$AssertEquals(##class(MyPackage.Math).Substract(3,2),1, "Test Substract(3,2)=1")
@@ -16,8 +17,10 @@ Method TestSubstract()
 
 // Developper 2: Add new division test
 
-/*Method TestDivision()
+
+//Developper 2: Add new division test
+Method TestDivision()
 {
 	do $$$AssertEquals(##class(MyPackage.Math).Division(4,2),2, "Test Division (4,2)=2")
-}*/
+}
 }
