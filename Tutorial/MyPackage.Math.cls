@@ -9,4 +9,12 @@ ClassMethod Add (nb1 As %Integer, nb2 As %Integer)As %Integer
 
 }
 
+//Developper 2: Add Division Method
+ClassMethod Division (nb1 As %Integer, nb2 As %Integer)As %Integer
+{
+	
+	Quit nb1/nb2
+
+}
+
 }
