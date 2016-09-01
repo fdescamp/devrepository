@@ -18,7 +18,7 @@ Method TestAdd()
 //Developper 2: Add new division method
 Method TestDivision()
 {
-	do $$$AssertEquals(##class(MyPackage.Math).Division(4,2),4, "Test Division(4,2)=2")
+	do $$$AssertEquals(##class(MyPackage.Math).Division(4,2),2, "Test Division(4,2)=2")
 }
 
 
