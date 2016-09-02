@@ -15,7 +15,10 @@ Method OnBeforeProductionStart() As %Library.Status
 	Do $$$AssertEquals(s,$$$OK)
 	Set s = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "URL","/REST/PatientExist/Patients",0)	
 	Do $$$AssertEquals(s,$$$OK)
-
+	
+	if 's {Quit ..Error("Error in OnBeforeProductionStart()")}
+	
+	Quit $$$OK
 }
 
 Method TestPatientWSOperation()
