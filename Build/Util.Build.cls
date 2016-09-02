@@ -16,7 +16,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <If Condition="&quot;${SRCDIR}&quot;=&quot;&quot;"><Error /></If>
 
 <!-- Namespace is named JOBNAME-BUILD to avoid wiping non-build namespace -->
-<Var Name="NAMESPACE" Value="${JOBNAME}-BUILD" />
+<Var Name="NAMESPACE" Value="${JOBNAME}BUILD" />
 
 <!-- Define QA filepath for db -->
 <Var Name="DBDIR" Value="${CACHEDIR}" />
