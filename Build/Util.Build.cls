@@ -69,11 +69,11 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 
 <!-- Now, dismount database so we can copy database file -->
 <!-- This call is invoked in %SYS namespace -->
-<Namespace Name="%SYS">
+ <!--<Namespace Name="%SYS">
 <Invoke Class="SYS.Database" Method="DismountDatabase" CheckStatus="true">
 <Arg name="DatabaseDir" Value="${DBDIR}db/${NAMESPACE}/" />
 </Invoke>
-</Namespace> 
+</Namespace>--> 
 
 </Manifest>
 }
