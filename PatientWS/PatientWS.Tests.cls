@@ -10,20 +10,26 @@ Method OnBeforeProductionStart() As %Library.Status
 {
 	Set ..MainDir = "C:\Tutorial"
 	
-	//Change Setting parameter on Business Operation to use mock service
+	//Change Setting parameter on Business Operation WS to use mock service
 	Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "HTTPPort","8082",0)	
 	Do $$$AssertEquals(tSC,$$$OK)
 	Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "URL","/REST/PatientExist/Patients",0)	
 	Do $$$AssertEquals(tSC,$$$OK)
+	
+	
+	
 	
 	if 'tSC {Quit ..Error("Error in OnBeforeProductionStart()")}
 	
 	Quit $$$OK
 }
 
-Method TestPatientWSOperation()As %Status
-{
 
+Method OnAfterProductionStart() As %Status
+{
+	Set tSC=$$$OK
+	
+	//Test PatientWS Business Operation
 	//Test Patient Exists
 	set tRequest=##class(PatientWS.Message.PatientRequest).%New()
 	set tRequest.PatientID=1	
@@ -38,15 +44,17 @@ Method TestPatientWSOperation()As %Status
 	if 'tSC {Quit ..Error("Error in TestPatientWSOperation Patient does not Exist")}
 	do $$$AssertEquals(tResponse.Exist,0, "PatientID 2 does not exist in DB")
 	
-	Quit $$$OK
-}
+	//Test PatientSQL Business Operation
+	//Test Patient Insert
 
-Method OnAfterProductionStart() As %Status
-{
-		set tSC=$$$OK
-		Set tSC = ..TestPatientWSOperation()
+	//Test Patient Select
+
+
+	
+	
 		
-		Quit tSC
+	Quit tSC
+
 }
 
 }
