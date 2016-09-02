@@ -34,7 +34,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 </Configuration>
 
 <!-- Import build class to new environment -->
-<Import File="${SRCDIR}${PROJECT}/Util.Build.cls" Flags="c" />
+<Import File="${SRCDIR}Math/Util.Build.cls" Flags="c" />
 
 <!-- Invoke compile method -->
 <Invoke Class="%SYSTEM.OBJ" Method="ImportDir" CheckStatus="true">
