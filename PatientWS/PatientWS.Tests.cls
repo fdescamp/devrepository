@@ -35,15 +35,16 @@ Method OnAfterProductionStart() As %Status
 {
 	Set tSC=$$$OK
 	
+	//Log Settings
+	set tSC=..GetSetting("PatientWS.Production","PatientWS.BusinessOperation","URL",.value)
+	Do ..LogMessage("URL="_value)
+	set tSC=..GetSetting("PatientWS.Production","PatientWS.BusinessOperation","HTTPPort",.value)
+	Do ..LogMessage("HTTPPort="_value)
+	
 	//Test PatientWS Business Operation
 	//Test Patient Exists
 	set tRequest=##class(PatientWS.Message.PatientRequest).%New()
 	set tRequest.PatientID=1	
-	
-
-	Do ..LogMessage("URL="_..GetSetting("PatientWS.Production","PatientWS.BusinessOperation","URL"))
-	Do ..LogMessage("HTTPPort="_..GetSetting("PatientWS.Production","PatientWS.BusinessOperation","HTTPPort"))
-	
 	Set tSC = ..SendRequest( "PatientWS.BusinessOperation" ,tRequest,.tResponse,1,40)
 	if 'tSC {Quit ..Error("Error in TestPatientWSOperation Patient Exist")}
 	do $$$AssertEquals(tResponse.Exist,1, "PatientID 1 exists in DB")
