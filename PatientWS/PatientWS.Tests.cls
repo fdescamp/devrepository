@@ -13,6 +13,7 @@ Method OnBeforeProductionStart() As %Library.Status
 	//Check namespace - if "DEVBUILD" do not use mock services and use settings defined in sys default settings
 
 	//Change Setting parameter on Business Operation WS to use mock service
+	Do ..LogMessage("NAMESPACE="_$NAMESPACE)
 	if ($NAMESPACE'="DEVBUID")
 	{
 		Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "HTTPPort","8082",0)	
@@ -38,6 +39,11 @@ Method OnAfterProductionStart() As %Status
 	//Test Patient Exists
 	set tRequest=##class(PatientWS.Message.PatientRequest).%New()
 	set tRequest.PatientID=1	
+	
+
+	Do ..LogMessage("URL="_..GetSetting("PatientWS.Production","PatientWS.BusinessOperation","URL"))
+	Do ..LogMessage("HTTPPort="_..GetSetting("PatientWS.Production","PatientWS.BusinessOperation","HTTPPort"))
+	
 	Set tSC = ..SendRequest( "PatientWS.BusinessOperation" ,tRequest,.tResponse,1,40)
 	if 'tSC {Quit ..Error("Error in TestPatientWSOperation Patient Exist")}
 	do $$$AssertEquals(tResponse.Exist,1, "PatientID 1 exists in DB")
@@ -53,10 +59,6 @@ Method OnAfterProductionStart() As %Status
 	//Test Patient Insert
 
 	//Test Patient Select
-
-
-	
-	
 		
 	Quit tSC
 
