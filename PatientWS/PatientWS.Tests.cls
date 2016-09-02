@@ -27,7 +27,6 @@ Method TestPatientWSOperation()As %Status
 	//Test Patient Exists
 	set tRequest=##class(PatientWS.Message.PatientRequest).%New()
 	set tRequest.PatientID=1	
-	//Set tSC = ##Class(EnsLib.Testing.Service).SendTestRequest(Name, tRequest, .tResponse, .tSessionID)
 	Set tSC = ..SendRequest( "PatientWS.BusinessOperation" ,tRequest,.tResponse,1,40)
 	if 'tSC {Quit ..Error("Error in TestPatientWSOperation Patient Exist")}
 	do $$$AssertEquals(tResponse.Exist,1, "PatientID 1 exists in DB")
@@ -35,7 +34,6 @@ Method TestPatientWSOperation()As %Status
 	//Test Patient does not Exist
 	set tRequest=##class(PatientWS.Message.PatientRequest).%New()
 	set tRequest.PatientID=2	
-	//Set tSC = ##Class(EnsLib.Testing.Service).SendTestRequest(Name, tRequest, .tResponse, .tSessionID)
 	Set tSC = ..SendRequest( "PatientWS.BusinessOperation" ,tRequest,.tResponse,1,40)
 	if 'tSC {Quit ..Error("Error in TestPatientWSOperation Patient does not Exist")}
 	do $$$AssertEquals(tResponse.Exist,0, "PatientID 2 does not exist in DB")
