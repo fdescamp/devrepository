@@ -34,7 +34,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 </Configuration>
 
 <!--Import System Default Settings -->
-<Import File="${SRCDIR}${PROJECT}/Ens.Config.DefaultSettingsD.gof"  Flags="ck" IgnoreErrors="0"/>
+<Import File="${SRCDIR}${PROJECT}/Ens.Config.DefaultSettingsD.gof"  Flags="ck" IgnoreErrors="1"/>
 
 <!-- Import build class to new environment -->
 <Import File="${SRCDIR}Build/Util.Build.cls" Flags="c" />
