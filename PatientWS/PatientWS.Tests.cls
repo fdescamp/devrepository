@@ -10,11 +10,16 @@ Method OnBeforeProductionStart() As %Library.Status
 {
 	Set ..MainDir = "C:\Tutorial"
 	
+	//Check namespace - if "DEVBUILD" do not use mock services and use settings defined in sys default settings
+
 	//Change Setting parameter on Business Operation WS to use mock service
-	Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "HTTPPort","8082",0)	
-	Do $$$AssertEquals(tSC,$$$OK)
-	Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "URL","/REST/PatientExist/Patients",0)	
-	Do $$$AssertEquals(tSC,$$$OK)
+	if ($NAMESPACE'="DEVBUID")
+	{
+		Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "HTTPPort","8082",0)	
+		Do $$$AssertEquals(tSC,$$$OK)
+		Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "URL","/REST/PatientExist/Patients",0)	
+		Do $$$AssertEquals(tSC,$$$OK)
+	}
 	
 	
 	
