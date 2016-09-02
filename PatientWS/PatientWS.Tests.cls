@@ -6,9 +6,21 @@ Parameter PRODUCTION = "PatientWS.Production";
 
 Parameter IGNOREPRODUCTIONERRORS = 1;
 
+Method OnBeforeProductionStart() As %Library.Status
+{
+	Set ..MainDir = "C:\Tutorial"
+	
+	//Change Setting parameter on Business Operation to use mock service
+	Set s = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "HTTPPort","8082",0)	
+	Do $$$AssertEquals(s,$$$OK)
+	Set s = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "URL","/REST/PatientExist/Patients",0)	
+	Do $$$AssertEquals(s,$$$OK)
+
+}
+
 Method TestPatientWSOperation()
 {
-	Set Name="PatientWS.BusinessOperation"
+	
 	
 	//Test Patient Exists
 	set tRequest=##class(PatientWS.Message.PatientRequest).%New()
