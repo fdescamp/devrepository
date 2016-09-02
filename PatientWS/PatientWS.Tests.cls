@@ -21,10 +21,9 @@ Method OnBeforeProductionStart() As %Library.Status
 	Quit $$$OK
 }
 
-Method TestPatientWSOperation()
+Method TestPatientWSOperation()As %Status
 {
-	
-	
+
 	//Test Patient Exists
 	set tRequest=##class(PatientWS.Message.PatientRequest).%New()
 	set tRequest.PatientID=1	
@@ -40,6 +39,8 @@ Method TestPatientWSOperation()
 	Set tSC = ..SendRequest( "PatientWS.BusinessOperation" ,tRequest,.tResponse,1,40)
 	if 'tSC {Quit ..Error("Error in TestPatientWSOperation Patient does not Exist")}
 	do $$$AssertEquals(tResponse.Exist,0, "PatientID 2 does not exist in DB")
+	
+	Quit $$$OK
 }
 
 Method OnAfterProductionStart() As %Status
