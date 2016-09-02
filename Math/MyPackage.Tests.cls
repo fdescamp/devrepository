@@ -16,12 +16,12 @@ Method TestSubstract()
 }
 
 // Developper 2: Add new division test
-
-
-//Developper 2: Add new division test
+//Handle division by 0
 Method TestDivision()
 {
+	do $$$AssertEquals(##class(MyPackage.Math).Division(4,0),0, "Test Division by 0 - return 0")
 	do $$$AssertEquals(##class(MyPackage.Math).Division(4,2),2, "Test Division (4,2)=2")
 }
+
 
 }
