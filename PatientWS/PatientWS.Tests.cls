@@ -11,12 +11,12 @@ Method OnBeforeProductionStart() As %Library.Status
 	Set ..MainDir = "C:\Tutorial"
 	
 	//Change Setting parameter on Business Operation to use mock service
-	Set s = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "HTTPPort","8082",0)	
+	Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "HTTPPort","8082",0)	
 	Do $$$AssertEquals(s,$$$OK)
-	Set s = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "URL","/REST/PatientExist/Patients",0)	
+	Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "URL","/REST/PatientExist/Patients",0)	
 	Do $$$AssertEquals(s,$$$OK)
 	
-	if 's {Quit ..Error("Error in OnBeforeProductionStart()")}
+	if 'tSC {Quit ..Error("Error in OnBeforeProductionStart()")}
 	
 	Quit $$$OK
 }
@@ -30,14 +30,16 @@ Method TestPatientWSOperation()
 	set tRequest.PatientID=1	
 	//Set tSC = ##Class(EnsLib.Testing.Service).SendTestRequest(Name, tRequest, .tResponse, .tSessionID)
 	Set tSC = ..SendRequest( "PatientWS.BusinessOperation" ,tRequest,.tResponse,1,40)
-	do $$$AssertEquals(tResponse.Exists,1, "PatientID 1 exists in DB")
+	if 'tSC {Quit ..Error("Error in TestPatientWSOperation Patient Exist")}
+	do $$$AssertEquals(tResponse.Exist,1, "PatientID 1 exists in DB")
 	
 	//Test Patient does not Exist
 	set tRequest=##class(PatientWS.Message.PatientRequest).%New()
 	set tRequest.PatientID=2	
 	//Set tSC = ##Class(EnsLib.Testing.Service).SendTestRequest(Name, tRequest, .tResponse, .tSessionID)
 	Set tSC = ..SendRequest( "PatientWS.BusinessOperation" ,tRequest,.tResponse,1,40)
-	do $$$AssertEquals(tResponse.Exists,0, "PatientID 2 does not exist in DB")
+	if 'tSC {Quit ..Error("Error in TestPatientWSOperation Patient does not Exist")}
+	do $$$AssertEquals(tResponse.Exist,0, "PatientID 2 does not exist in DB")
 }
 
 Method OnAfterProductionStart() As %Status
