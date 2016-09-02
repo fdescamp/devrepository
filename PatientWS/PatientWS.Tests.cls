@@ -12,9 +12,9 @@ Method OnBeforeProductionStart() As %Library.Status
 	
 	//Change Setting parameter on Business Operation to use mock service
 	Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "HTTPPort","8082",0)	
-	Do $$$AssertEquals(s,$$$OK)
+	Do $$$AssertEquals(tSC,$$$OK)
 	Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "URL","/REST/PatientExist/Patients",0)	
-	Do $$$AssertEquals(s,$$$OK)
+	Do $$$AssertEquals(tSC,$$$OK)
 	
 	if 'tSC {Quit ..Error("Error in OnBeforeProductionStart()")}
 	
