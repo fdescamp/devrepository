@@ -3,6 +3,8 @@ Class PatientWS.Tests Extends %UnitTest.TestCase
 
 Method TestPatientWSOperation()
 {
+	Set Name="PatientWS.BusinessOperation"
+	
 	//Test Patient Exists
 	set tRequest=##class(PatientWS.Message.PatientRequest).%New()
 	set tRequest.PatientID=1	
@@ -12,6 +14,7 @@ Method TestPatientWSOperation()
 	//Test Patient does not Exist
 	set tRequest=##class(PatientWS.Message.PatientRequest).%New()
 	set tRequest.PatientID=2	
+	Set tSC = ##Class(EnsLib.Testing.Service).SendTestRequest(Name, tRequest, .tResponse, .tSessionID)
 	do $$$AssertEquals(tResponse.Exists,0, "PatientID 2 does not exist in DB")
 }
 
