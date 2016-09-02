@@ -3,6 +3,7 @@ Class PatientWS.Tests Extends %UnitTest.TestProduction
 
 /// Class name of the production.  It must contain the production class name.
 Parameter PRODUCTION = "PatientWS.Production";
+
 Parameter IGNOREPRODUCTIONERRORS = 1;
 
 Method TestPatientWSOperation()
@@ -31,6 +32,5 @@ Method OnAfterProductionStart() As %Status
 		
 		Quit tSC
 }
-
 
 }
