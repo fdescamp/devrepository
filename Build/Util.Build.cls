@@ -30,7 +30,9 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
   Description="Build application" 
   Recurse="true" 
   ServeFiles="true"
-   AuthenticationMethods="64" />
+  Grant="%All"
+   AuthenticationMethods="64"
+  />
 </Configuration>
 
 <!--Import System Default Settings -->
