@@ -71,7 +71,7 @@ XData BuildManifest [ XMLNamespace = INSTALLER ]
 <!-- This call is invoked in %SYS namespace -->
 <Namespace Name="%SYS">
 <Invoke Class="SYS.Database" Method="DismountDatabase" CheckStatus="true">
-<Arg name="DatabaseDir" Value="${SRCDIR}db/${NAMESPACE}/" />
+<Arg name="DatabaseDir" Value="${DBDIR}db/${NAMESPACE}/" />
 </Invoke>
 </Namespace> 
 
