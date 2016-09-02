@@ -9,13 +9,12 @@ Parameter IGNOREPRODUCTIONERRORS = 1;
 Method OnBeforeProductionStart() As %Library.Status
 {
 	Set ..MainDir = "C:\Tutorial"
-	
+	set tSC=$$$OK
 	//Check namespace - if "DEVBUILD" do not use mock services and use settings defined in sys default settings
-
-	//Change Setting parameter on Business Operation WS to use mock service
 	Do ..LogMessage("NAMESPACE="_$NAMESPACE)
 	if ($NAMESPACE'="DEVBUILD")
 	{
+		//Change Setting parameter on Business Operation WS to use mock service
 		Do ..LogMessage("-----Use Mock Services------")
 		Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "HTTPPort","8082",0)	
 		Do $$$AssertEquals(tSC,$$$OK)
@@ -28,7 +27,7 @@ Method OnBeforeProductionStart() As %Library.Status
 	
 	if 'tSC {Quit ..Error("Error in OnBeforeProductionStart()")}
 	
-	Quit $$$OK
+	Quit tSC
 }
 
 
