@@ -14,8 +14,9 @@ Method OnBeforeProductionStart() As %Library.Status
 
 	//Change Setting parameter on Business Operation WS to use mock service
 	Do ..LogMessage("NAMESPACE="_$NAMESPACE)
-	if ($NAMESPACE'="DEVBUID")
+	if ($NAMESPACE'="DEVBUILD")
 	{
+		Do ..LogMessage("-----Use Mock Services------")
 		Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "HTTPPort","8082",0)	
 		Do $$$AssertEquals(tSC,$$$OK)
 		Set tSC = ..ChangeSetting("PatientWS.Production","PatientWS.BusinessOperation", "URL","/REST/PatientExist/Patients",0)	
